@@ -25,7 +25,7 @@ chkbox.stateChanged(function(e) {
 });
 
 var radiobtn = new MyToolkit.RadioButtons;
-radiobtn.setButtons(["apples","peas","tomatoes"])
+radiobtn.setButtons(["apples","peas","tomatoes"]);
 radiobtn.move(10,10);
 radiobtn.onclick(function(e){
 	console.log(e);
@@ -33,3 +33,15 @@ radiobtn.onclick(function(e){
 radiobtn.stateChanged(function(e) {
 	console.log(e);
 });
+
+var txtbox = new MyToolkit.TextBox;
+txtbox.move(10,10);
+txtbox.textChanged(function(e) {
+	console.log(e);
+});
+txtbox.stateChanged(function(e) {
+	console.log(e);
+});
+txtbox.type("This is a textbox");
+
+

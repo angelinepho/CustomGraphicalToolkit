@@ -258,8 +258,77 @@ var MyToolkit = (function() {
         }
     }
 
+    var TextBox = function() {
+        var draw = SVG().addTo('body').size('100%','100%')
+        var rect = draw.rect(250, 25).fill('white').stroke({color: 'black', width: 2.0}).move(7.5,7.5)
+        var text = draw.text('hello').move(11.5, 11.5).font('family', 'Menlo')
+        var caret = draw.line(65, 11, 65, 28).stroke({width: 2.0, color: "blue"}).hide()
 
-return {Button, CheckBox, RadioButtons}
+        var textEvent = null
+        var stateEvent = null
+        var defaultState = "idle" 
+        var defaultText = "Hello"
+
+        rect.mouseover(function(){
+            this.fill({ color: 'black', opacity: 0.1}).stroke({color: 'black', width: 3.0})
+            caret.show()
+            defaultState = "hover"
+            transition()
+        })
+        rect.mouseout(function(){
+            this.fill({ color: 'white'}).stroke({color: 'black', width: 2.0})
+            caret.hide()
+            defaultState = "idle"
+            transition()
+        })
+        rect.mousedown(function(){
+            this.fill({ color: 'blue', opacity: 0.1}).stroke({color: 'blue', width: 3.0})
+            defaultState = "pressed"
+            transition()
+        })
+        rect.mouseup(function(){
+            this.fill({ color: 'white'}).stroke({color: 'black', width: 2.0})
+            defaultState = "up"
+            transition()
+        })
+        function transition()
+        {
+            if (stateEvent != null) {
+                stateEvent(defaultState)
+            }
+        }
+        function textTransition()
+        {
+            if (textEvent != null) {
+                textEvent(defaultText)
+            }
+        }
+        return {
+            move: function(x, y) {
+                rect.move(rect.x() + x, rect.y() + y)
+                text.move(text.x() + x, text.y() + y)
+                caret.move(text.x()+text.length()+7.5, text.y(), text.x()+text.length()+7.5, text.y())
+            },
+            stateChanged: function(eventHandler) {
+                stateEvent = eventHandler
+            },
+            textChanged: function(eventHandler) {
+                textEvent = eventHandler
+            },
+            src: function() {
+                return rect;
+            },
+            type: function(sentence) {
+                text.text(sentence)
+                caret.move(text.x()+text.length()+7.5, text.y(), text.x()+text.length()+7.5, text.y())
+                defaultText = "text changed: " + sentence;
+                textTransition()
+            }
+        }
+    }
+
+
+return {Button, CheckBox, RadioButtons, TextBox}
 }());
 
 export{MyToolkit}
