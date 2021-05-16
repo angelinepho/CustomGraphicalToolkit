@@ -2,55 +2,72 @@
 
 import {MyToolkit} from './mytoolkit.js';
 
+var window = SVG().addTo('body').size('500','500')
+
 // Implement a MyToolkit Button
-var btn = new MyToolkit.Button;
-btn.setId("Press Me");
-btn.move(20,20);
-btn.onclick(function(e){
+var btn = new MyToolkit.Button(window, "Button");
+btn.move(0,0);
+btn.clickChanged(function(e){
 	console.log(e);
-	console.log(e.target);
 });
 btn.stateChanged(function(e) {
 	console.log(e);
 });
 
-var chkbox = new MyToolkit.CheckBox;
-chkbox.move(20,20);
-chkbox.setId("Complete A3");
-chkbox.onclick(function(e){
+var checkBox = new MyToolkit.CheckBox(window, "Check Box");
+checkBox.move(150,0);
+checkBox.checkChanged(function(e){
 	console.log(e);
 });
-chkbox.stateChanged(function(e) {
-	console.log(e);
-});
-
-var radiobtn = new MyToolkit.RadioButtons;
-radiobtn.setButtons(["kale","celery","lettuce"]);
-radiobtn.move(20,20);
-radiobtn.onclick(function(e){
-	console.log(e);
-});
-radiobtn.stateChanged(function(e) {
+checkBox.stateChanged(function(e) {
 	console.log(e);
 });
 
-var txtbox = new MyToolkit.TextBox;
-txtbox.move(20,20);
-txtbox.textChanged(function(e) {
-	console.log(e);
-	console.log(txtbox.getText());
-});
-txtbox.stateChanged(function(e) {
+var radioBtns = new MyToolkit.RadioButtons(window, ["Radio Button 0", "Radio Button 1", "Radio Button 2", "Radio Button 3", "Radio Button 4"]);
+radioBtns.move(0,100);
+radioBtns.checkChanged(function(e){
 	console.log(e);
 });
-
-var scrlbar = new MyToolkit.ScrollBar;
-scrlbar.move(20,20)
-scrlbar.setHeight(400)
-scrlbar.scrollChanged(function(e) {
-	console.log(e);
-});
-scrlbar.stateChanged(function(e) {
+radioBtns.stateChanged(function(e) {
 	console.log(e);
 });
 
+var textBox = new MyToolkit.TextBox(window);
+textBox.move(0,300);
+textBox.textChanged(function(e) {
+	console.log(e);
+	console.log(textBox.getText());
+});
+textBox.stateChanged(function(e) {
+	console.log(e);
+});
+//console.log(textBox.getText());
+
+var scrollBar = new MyToolkit.ScrollBar(window, 400);
+scrollBar.move(400,0)
+scrollBar.scrollChanged(function(e) {
+	console.log(e);
+});
+scrollBar.stateChanged(function(e) {
+	console.log(e);
+});
+
+var progressBar = new MyToolkit.ProgressBar(window, 400, 25);
+progressBar.move(0,450)
+progressBar.incrementChanged(function(e) {
+	console.log(e);
+});
+progressBar.stateChanged(function(e) {
+	console.log(e);
+});
+progressBar.increment(50)
+// progressBar.increment(100)
+
+var toggle = new MyToolkit.ToggleButton(window);
+toggle.move(0,350)
+toggle.toggleChanged(function(e) {
+	console.log(e);
+});
+toggle.stateChanged(function(e) {
+	console.log(e);
+});
